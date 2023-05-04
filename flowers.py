@@ -22,9 +22,13 @@ for image, label in flowers_train.take(3):
     print('Label: ', label)
 
 #Plot an image from the training split
+##CURRENTLY NOT WORKING AS 'PLACEHOLDERS' ARE MISSING. 
 for image, label in flowers_train.take(1):
-    image = image.numpy().squeeze()
-    plt.imshow(image)
-    plt.colorbar()
-    plt.title(label.numpy())
-    plt.show()
+    image = image.numpy()
+    label = label.numpy()
+plt.figure()
+plt.imshow(image)
+plt.title(label)
+plt.colorbar()
+plt.grid(False)
+plt.show()
