@@ -87,6 +87,6 @@ model.add(MaxPooling2D(pool_size = (2, 2)))
 model.add(Flatten())
 model.add(Dense(units = 128, activation = 'relu'))
 #output layer
-model.add(Dense(units = 102, activation = 'relu'))
+model.add(Dense(units = 102, activation = 'softmax'))
 
 print(model.summary())
