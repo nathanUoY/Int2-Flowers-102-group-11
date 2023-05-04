@@ -1,7 +1,10 @@
-#Make all neccessary imports
+#Make all neccessary imports (SOME AREN'T NEEDED, WILL REMOVE LATER)
 import tensorflow as tf
 import tensorflow_datasets as tfds
+from keras.models import Sequential
 from tensorflow.keras import layers
+from keras.layers import Conv2D, MaxPooling2D
+from keras.layers import Activation, Dropout, Flatten, Dense
 from keras.preprocessing.image import ImageDataGenerator
 import numpy as np
 import matplotlib.pyplot as plt
@@ -32,6 +35,7 @@ for image, label in flowers_train_raw.take(1):
   plt.title(label.numpy())
   plt.show()
   
+
 #find average image height and width for resizing
 totalHeight = 0
 totalWidth = 0
@@ -60,9 +64,29 @@ flowers_test = flowers_test_raw.map(imageAug)
 
 #plots same image from before but agumented
 for image, label in flowers_train.take(1):
+  print("Augmented image shape: ", image.shape)
   image = image.numpy().squeeze()
   plt.imshow(image)
   plt.colorbar()
   plt.title(label.numpy())
   plt.show()
- 
+
+#build the model
+#haven't given this much thought yet just testing to see if it works
+model = Sequential()
+#first layer
+model.add(Conv2D(32, (5, 5), padding = 'Same', activation = 'relu', input_shape = (581, 581, 3)))
+model.add(MaxPooling2D(pool_size = (2, 2)))
+#second layer
+model.add(Conv2D(32, (3, 3), padding = 'Same', activation = 'relu', input_shape = (581, 581, 3)))
+model.add(MaxPooling2D(pool_size = (2, 2)))
+#third layer
+model.add(Conv2D(32, (3,3), padding = 'Same', activation = 'relu', input_shape = (581, 581, 3)))
+model.add(MaxPooling2D(pool_size = (2, 2)))
+#flatten layer
+model.add(Flatten())
+model.add(Dense(units = 128, activation = 'relu'))
+#output layer
+model.add(Dense(units = 102, activation = 'relu'))
+
+print(model.summary())
